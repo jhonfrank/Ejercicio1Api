@@ -2,6 +2,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 5010
 
+ENV ASPNETCORE_URLS=http://+:5010
+ENV ConnectionStrings__DefaultConnection="Server=mssql-1,1433; Database=db;User Id=sa;Password=StrongPassw0rd;"
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["./*.csproj", "."]
