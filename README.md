@@ -10,6 +10,7 @@ ENV:
 
     - ConnectionStrings__DefaultConnection=Server=server; Database=db;User Id=sa;Password=password;
 
+Se adjunta el script **SQLQuery setup.sql**
 
 ## Docker exec
 
