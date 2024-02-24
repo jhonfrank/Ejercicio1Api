@@ -2,7 +2,7 @@
 {
     public class Employee
     {
-        public int Id { get; set; }
+        public int id { get; set; }
         public string? name { get; set; }
         public string? document_number { get; set; }
         public decimal salary { get; set; }

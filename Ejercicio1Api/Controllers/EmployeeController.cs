@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ejercicio1Api.Model;
 using Ejercicio1Api.Repository;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,44 +15,50 @@ namespace Ejercicio1Api.Controllers
 
         // GET: api/<EmployeeController>
         [HttpGet]
-        public IEnumerable<Employee> Get()
+        public ActionResult<IEnumerable<Employee>> Get()
         {
-            return repository.GetAllEmployees();
+            return Ok(repository.GetAllEmployees());
         }
 
         // GET api/<EmployeeController>/5
         [HttpGet("{id}")]
-        public Employee Get(int id)
+        public ActionResult<Employee> Get(int id)
         {
-            return repository.GetEmployee(id);
+            return Ok(repository.GetEmployee(id));
         }
 
         // GET api/<EmployeeController>/78456948
-        [HttpGet("{document_number}")]
-        public Employee Get(string document_number)
+        [HttpGet("document_number/{document_number}")]
+        public ActionResult<Employee> Get(string document_number)
         {
-            return repository.GetEmployee(document_number);
+            if (!document_number.Length.Equals(8))
+            {
+                return NotFound();
+            }
+            return Ok(repository.GetEmployee(document_number));
         }
 
         // POST api/<EmployeeController>
         [HttpPost]
-        public void Post([FromBody] Employee item)
+        public ActionResult Post([FromBody] Employee item)
         {
             repository.SaveEmployee(item);
+            return Ok();
         }
 
         // PUT api/<EmployeeController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Employee item)
         {
-            repository.UpdateEmployee(item);
+            repository.UpdateEmployee(id, item);
         }
 
         // DELETE api/<EmployeeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
             repository.DeleteEmployee(id);
+            return Ok();
         }
     }
 }
